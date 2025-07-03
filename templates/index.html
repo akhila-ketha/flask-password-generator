@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Password Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #00c9ff, #92fe9d);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: gradientFlow 10s infinite alternate;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #00c9ff;
+      box-shadow: 0 0 8px rgba(0, 201, 255, 0.3);
+      outline: none;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .generate-btn {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
+    .generate-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      background-color: #00b894;
+      color: white;
+    }
+
+    .copy-btn:hover {
+      background-color: #019270;
+      transform: scale(1.05);
+    }
+
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f4f6fa;
+      border-radius: 10px;
+      word-wrap: break-word;
+      font-weight: 500;
+      font-size: 16px;
+      color: #2d3436;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .strength {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #333;
+    }
+
+    @media (max-width: 500px) {
+      h2 { font-size: 22px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Smart Password Generator</h2>
+    <form method="POST">
+      <input type="text" name="name" placeholder="Enter your name" required>
+      <input type="number" name="length" placeholder="Enter password length (4 to 12)" required min="4" max="12">
+      <button class="btn generate-btn" type="submit">Generate Password</button>
+    </form>
+
+    {% if password %}
+      <div class="output" id="passwordBox">{{ password }}</div>
+      <button class="btn copy-btn" onclick="copyPassword()">📋 Copy to Clipboard</button>
+      <div class="strength">Strength: {{ strength }}</div>
+    {% endif %}
+  </div>
+
+  <script>
+    function copyPassword() {
+      const passwordText = document.getElementById("passwordBox").innerText;
+      navigator.clipboard.writeText(passwordText).then(() => {
+        alert("✅ Password copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
